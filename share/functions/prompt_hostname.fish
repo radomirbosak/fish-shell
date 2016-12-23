@@ -2,7 +2,11 @@
 # hostname command uses. So cache the answer so including it in the prompt doesn't make fish seem
 # slow.
 if not set -q __fish_prompt_hostname
-    set -g __fish_prompt_hostname (hostname | string split '.')[1]
+    if which hostname >/dev/null ^&1
+        set -g __fish_prompt_hostname (hostname | string split '.')[1]
+    else
+        set -g __fish_prompt_hostname ''
+    end
 end
 
 function prompt_hostname
